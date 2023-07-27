@@ -1,0 +1,25 @@
+{
+  "name": "telegram-bot",
+  "version": "0.0.1",
+  "description": "Library for use of telegram bot API",
+  "main": "telegramBot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Carual/telegramBot.git"
+  },
+  "author": {
+    "name": "Carual",
+    "email": "juan.sartru@gmail.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Carual/telegramBot/issues"
+  },
+  "homepage": "https://github.com/Carual/telegramBot#readme",
+  "dependencies": {
+    "axios": "^1.4.0"
+  }
+}

@@ -1,7 +1,7 @@
 const axios = require('axios')
 const URL = 'https://api.telegram.org/bot'
 class telegramBot {
-	constructor(token) {
+	constructor(token, config = {}) {
 		this.token = token
 	}
 	async request(method, data) {
