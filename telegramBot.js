@@ -78,7 +78,7 @@ class telegramBot {
 		if (updateObj.message && updateObj.message.text && updateObj.message.text.startsWith('/')) {
 			this.onCommand.forEach(func => {
 				let args = updateObj.message.text.split(' ')
-				let command = args.splice(0, 1)
+				let command = args.splice(0, 1)[0].substr(1)
 				func(command, updateObj.message, ...args)
 			})
 		}
