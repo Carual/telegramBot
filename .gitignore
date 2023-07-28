@@ -7,7 +7,7 @@ yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
 
-#tests
+# Tests
 __tests__
 *.test.js
 # Diagnostic reports (https://nodejs.org/api/report.html)

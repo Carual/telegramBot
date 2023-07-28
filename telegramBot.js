@@ -3,6 +3,10 @@ const URL = 'https://api.telegram.org/bot'
 class telegramBot {
 	constructor(token, config = {}) {
 		this.token = token
+		this.config = config
+		this.onMessage = []
+		this.onCommand = []
+		this.lastUpdate = 0
 	}
 	async request(method, data) {
 		for (let key in data) {
@@ -44,12 +48,16 @@ class telegramBot {
 			drop_pending_updates: dropPendingUpdates,
 		})
 	}
-	getUpdates(offset = 0, limit = 100, timeout = 0) {
-		return this.request('getUpdates', {
+	async getUpdates(offset = 0, limit = 100, timeout = 0) {
+		let updates = await this.request('getUpdates', {
 			offset,
 			limit,
 			timeout,
 		})
+		for (let update of updates) {
+			this.processUpdate(update)
+		}
+		return updates
 	}
 	getMyDescription() {
 		return this.request('getMyDescription')
@@ -58,6 +66,34 @@ class telegramBot {
 		return this.request('getMyCommands', {
 			scope,
 		})
+	}
+	processUpdate(updateObj) {
+		if (updateObj.update_id <= this.lastUpdate) return console.log('WARNING: update already processed')
+		this.lastUpdate = updateObj.update_id
+		if (updateObj.message) {
+			this.onMessage.forEach(func => {
+				func(updateObj.message)
+			})
+		}
+		if (updateObj.message && updateObj.message.text && updateObj.message.text.startsWith('/')) {
+			this.onCommand.forEach(func => {
+				let args = updateObj.message.text.split(' ')
+				let command = args.splice(0, 1)
+				func(command, updateObj.message, ...args)
+			})
+		}
+	}
+	on(event, func) {
+		switch (event) {
+			case 'message':
+				this.onMessage.push(func)
+				break
+			case 'command':
+				this.onCommand.push(func)
+				break
+			default:
+				throw new Error(`Event ${event} not found`)
+		}
 	}
 }
 module.exports = telegramBot
