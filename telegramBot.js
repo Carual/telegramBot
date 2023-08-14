@@ -63,9 +63,13 @@ class telegramBot {
 		return this.request('getMyDescription')
 	}
 	getMyCommands(scope) {
-		return this.request('getMyCommands', {
-			scope,
-		})
+		return this.request('getMyCommands', { scope })
+	}
+	setMyCommands(commands) {
+		return this.request('setMyCommands', { commands })
+	}
+	deleteMyCommands(scope) {
+		return this.request('deleteMyCommands', { scope })
 	}
 	processUpdate(updateObj) {
 		if (updateObj.update_id <= this.lastUpdate) return console.log('WARNING: update already processed')
